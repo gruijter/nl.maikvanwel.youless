@@ -139,6 +139,94 @@
 			]
 		},
 
+		{
+      "id": "LS110",
+      "name": {
+        "en": "LS-110",
+        "nl": "LS-110"
+      },
+      "images": {
+        "large": "./drivers/LS110/assets/images/large.jpg",
+        "small": "./drivers/LS110/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_power",
+        "meter_power"
+      ],
+      "mobile": {
+        "components": [
+          {
+            "id": "icon",
+            "capabilities": [ ]
+          },
+          {
+            "id": "sensor",
+            "capabilities": [
+              "measure_power",
+              "meter_power"
+            ]
+          }
+        ]
+      },
+
+      "pair": [
+          {
+          "id": "pair"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "YouLess LS-110 settings",
+            "nl": "YouLess LS-110 instellingen"
+          },
+          "children": [
+            {
+              "id": "youLessIp",
+              "type": "text",
+              "label": {
+                "en": "URL or IP address",
+                "nl": "URL of IP adres"
+              },
+              "value": "youless"
+            },
+            {
+              "id": "pollingInterval",
+              "type": "number",
+              "label": {
+                "en": "Polling interval (seconds)",
+                "nl": "Polling interval (seconden)"
+              },
+              "attr": { "min": 10 },
+              "value": 10
+            },
+            {
+              "id": "ledring_usage_limit",
+              "type": "number",
+              "label": {
+                "en": "Ledring screensaver max power (W)",
+                "nl": "Ledring screensaver max gebruik (W)"
+              },
+              "attr": { "min": 0 },
+              "value": 3000
+            },
+            {
+              "id": "ledring_production_limit",
+              "type": "number",
+              "label": {
+                "en": "Ledring screensaver max production (W)",
+                "nl": "Ledring screensaver max productie (W)"
+              },
+              "attr": { "min": 0 },
+              "value": 3000
+            }
+          ]
+        }
+      ]
+    },
+
     {
       "id": "LS120",
       "name": {
@@ -357,7 +445,45 @@
           "example" : 18
           }
         ]
-      }
+      },
+			{
+				"id":"power_changed",
+				"title": {
+					"en":"Power use changed",
+					"nl":"Stroomverbruik gewijzigd"
+				},
+				"args": [
+					{
+						"name": "LS110",
+						"type": "device",
+						"filter": "driver_uri=homey:app:nl.maikvanwel.youless&driver_id=LS110",
+						"placeholder": {
+							"en": "Which YouLess device",
+							"nl": "Welk YouLess apparaat"
+						 }
+					}
+				],
+				"tokens":[
+					{
+						"name":"power",
+						"type": "number",
+						"title": {
+							"en":"Watt",
+							"nl":"Watt"
+						},
+						"example" : 850
+					},
+					{
+						"name":"power_delta",
+						"type": "number",
+						"title": {
+							"en":"+- W",
+							"nl":"+- W"
+						},
+					"example" : 18
+					}
+				]
+			}
     ],
     "conditions": [
       {
