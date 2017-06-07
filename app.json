@@ -1,0 +1,395 @@
+{
+  "id": "nl.maikvanwel.youless",
+  "name": {
+    "en": "Youless",
+    "nl": "Youless"
+  },
+
+  "description": {
+    "en": "Imports data from YouLess energy meters",
+    "nl": "Leest data van YouLess energie meters"
+  },
+
+  "version": "1.0.0",
+  "compatibility": ">= 1.3",
+  "author": {
+    "name": "Robin Gruijter",
+    "email": "gruijter@hotmail.com"
+  },
+
+	"contributors": {
+		"developers": [
+			{
+				"name": "Maik van Wel",
+				"email": "m.vanwel@inproxio.eu"
+			},
+			{
+				"name": "Bas Jansen",
+				"email": "bas@balotti.com"
+			}
+		]
+	},
+
+  "images": {
+    "large": "./assets/images/large.jpg",
+    "small": "./assets/images/small.jpg"
+  },
+
+  "category": ["energy", "appliances", "tools" ],
+
+  "capabilities": {
+    "meter_offPeak": {
+      "type": "boolean",
+      "title": {
+        "en": "Off-peak",
+        "nl": "Laag tarief"
+      },
+      "desc": {
+        "en": "Is off-peak tarriff active?",
+        "nl": "Is laag tarief actief?"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "measure_gas": {
+      "type": "number",
+      "title": {
+        "en": "Gas",
+        "nl": "Gas"
+      },
+      "desc": {
+        "en": "Gas usage (previous hour)",
+        "nl": "Gasverbruik (vorige uur)"
+      },
+      "units": {
+        "en": "m\u00B3",
+        "nl": "m\u00B3"
+      },
+      "getable": true,
+      "setable": false
+    }
+  },
+
+  "drivers": [
+		{
+			"id": "youless",
+			"name": {
+				"en": "LS-110 (legacy)",
+				"nl": "LS-110 (legacy)"
+			},
+			"images": {
+				"large": "drivers/youless/assets/images/large.jpg",
+				"small": "drivers/youless/assets/images/small.jpg"
+			},
+			"class": "sensor",
+			"capabilities": [ "measure_power", "meter_power" ],
+			"mobile": {
+				"components": [
+					{
+						"id": "icon",
+						"capabilities": [  ]
+					},
+					{
+						"id": "sensor",
+						"capabilities": [ "measure_power" ]
+					},
+					{
+						"id": "sensor",
+						"capabilities": [ "meter_power" ]
+					}
+				]
+			},
+			"pair": [
+				{
+					"id": "pair"
+				}
+			],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "General settings",
+						"nl": "Algemene instellingen"
+					},
+					"children": [
+						{
+							"id": "host",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Host",
+								"nl": "Host"
+							}
+						},
+						{
+							"id": "pollingrate",
+							"type": "number",
+							"value": 10,
+							"label": {
+								"en": "Polling rate in seconds (min. 5)",
+								"nl": "Polling rate in seconden (min. 5)"
+							},
+							"attr": {
+								"min": 5,
+								"max": 3600
+							}
+						}
+					]
+				}
+			]
+		},
+
+    {
+      "id": "LS120",
+      "name": {
+        "en": "LS-120 (P1)",
+        "nl": "LS-120 (P1)"
+      },
+      "images": {
+        "large": "./drivers/LS120/assets/images/large.jpg",
+        "small": "./drivers/LS120/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_power",
+        "meter_offPeak",
+        "measure_gas",
+        "meter_gas",
+        "meter_power",
+        "meter_power.peak",
+        "meter_power.offPeak",
+        "meter_power.producedPeak",
+        "meter_power.producedOffPeak"
+      ],
+      "capabilitiesOptions": {
+        "meter_power.peak": {
+          "title": {
+            "en": "Power meter peak",
+            "nl": "Stroommeter piek"
+          }
+        },
+        "meter_power.offPeak": {
+          "title": {
+            "en": "Power meter off-peak",
+            "nl": "Stroommeter dal"
+          }
+        },
+        "meter_power.producedPeak": {
+          "title": {
+            "en": "Production peak",
+            "nl": "Productie piek"
+          }
+        },
+        "meter_power.producedOffPeak": {
+          "title": {
+            "en": "Production off-peak",
+            "nl": "Productie dal"
+          }
+        }
+      },
+
+      "mobile": {
+        "components": [
+          {
+            "id": "icon",
+            "capabilities": [ ]
+          },
+          {
+            "id": "sensor",
+            "capabilities": [
+              "measure_power",
+              "meter_offPeak",
+              "measure_gas",
+              "meter_gas",
+              "meter_power",
+              "meter_power.peak",
+              "meter_power.offPeak",
+              "meter_power.producedPeak",
+              "meter_power.producedOffPeak"
+            ],
+            "options": {
+              "icons": {
+                "measure_gas": "./drivers/LS120/assets/images/gas_icon.svg",
+                "meter_offPeak": "./drivers/LS120/assets/images/offPeak_icon.svg"
+              },
+              "meter_offPeak":{
+                "noblink": true,
+                "invert": false,
+                "label": {
+                  "true": {
+                    "en": "true",
+                    "nl": "ja"
+                  },
+                  "false": {
+                    "en": "false",
+                    "nl": "nee"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+
+      "pair": [
+          {
+          "id": "pair"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "YouLess LS-120 settings",
+            "nl": "YouLess LS-120 instellingen"
+          },
+          "children": [
+            {
+              "id": "youLessIp",
+              "type": "text",
+              "label": {
+                "en": "URL or IP address",
+                "nl": "URL of IP adres"
+              },
+              "value": "youless"
+            },
+            {
+              "id": "pollingInterval",
+              "type": "number",
+              "label": {
+                "en": "Polling interval (seconds)",
+                "nl": "Polling interval (seconden)"
+              },
+              "attr": { "min": 10 },
+              "value": 10
+            },
+            {
+              "id": "ledring_usage_limit",
+              "type": "number",
+              "label": {
+                "en": "Ledring screensaver max power (W)",
+                "nl": "Ledring screensaver max gebruik (W)"
+              },
+              "attr": { "min": 0 },
+              "value": 3000
+            },
+            {
+              "id": "ledring_production_limit",
+              "type": "number",
+              "label": {
+                "en": "Ledring screensaver max production (W)",
+                "nl": "Ledring screensaver max productie (W)"
+              },
+              "attr": { "min": 0 },
+              "value": 3000
+            }
+          ]
+        }
+      ]
+    }
+  ],
+
+  "flow":	{
+    "triggers":[
+      {
+        "id":"tariff_changed",
+        "title": {
+          "en":"Tariff has changed",
+          "nl":"Tarief is gewijzigd"
+        },
+        "args": [
+          {
+            "name": "LS120",
+            "type": "device",
+            "filter": "driver_uri=homey:app:nl.maikvanwel.youless&driver_id=LS120",
+            "placeholder": {
+              "en": "Which YouLess device",
+              "nl": "Welk YouLess apparaat"
+             }
+          }
+        ],
+        "tokens":[
+          {
+            "name":"tariff",
+            "type": "boolean",
+            "title": {
+              "en":"off-peak",
+              "nl":"dal"
+            },
+            "example" : false
+          }
+        ]
+      },
+      {
+        "id":"power_changed",
+        "title": {
+          "en":"Power use changed",
+          "nl":"Stroomverbruik gewijzigd"
+        },
+        "args": [
+          {
+            "name": "LS120",
+            "type": "device",
+            "filter": "driver_uri=homey:app:nl.maikvanwel.youless&driver_id=LS120",
+            "placeholder": {
+              "en": "Which YouLess device",
+              "nl": "Welk YouLess apparaat"
+             }
+          }
+        ],
+        "tokens":[
+          {
+            "name":"power",
+            "type": "number",
+            "title": {
+              "en":"Watt",
+              "nl":"Watt"
+            },
+            "example" : 850
+          },
+          {
+            "name":"power_delta",
+            "type": "number",
+            "title": {
+              "en":"+- W",
+              "nl":"+- W"
+            },
+          "example" : 18
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "offPeakLS120",
+        "title": {
+          "en": "Tariff !{{is|isn't}} off-peak",
+          "nl": "Tarief !{{is|is niet}} dal"
+        },
+        "args": [
+          {
+            "name": "LS120",
+            "type": "device",
+            "filter": "driver_uri=homey:app:nl.maikvanwel.youless&driver_id=LS120",
+            "placeholder": {
+              "en": "Which YouLess device",
+              "nl": "Welk YouLess apparaat"
+             }
+          }
+        ]
+      }
+    ]
+  },
+  "screensavers": [
+		{
+			"name": "YouLess_power",
+			"title": {
+				"en": "YouLess Power",
+				"nl": "YouLess Energie"
+			}
+		}
+  ],
+  "permissions": [
+    "homey:manager:ledring"
+  ]
+}
