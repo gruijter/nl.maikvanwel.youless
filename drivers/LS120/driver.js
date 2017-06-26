@@ -22,7 +22,7 @@ module.exports.init = function Init(devicesData, callback) {
 };
 
 module.exports.pair = function Pair(socket) {
-  // Validate connection data
+  // Validate device connection data
 	socket.on('validate', (serverData, callback) => {
 		validateConnection(serverData, (error, result) => {
 			if (!error) {
@@ -263,12 +263,13 @@ function buildDevice(deviceData, settings) {
 	devices[deviceData.id] = {
 		id: deviceData.id,
 		name: settings.name,
-		youLessIp: settings.youLessIp,
+		youLessIp: settings.youLessIp || settings.enelogicIp,
 		pollingInterval: settings.pollingInterval,
 		ledring_usage_limit: settings.ledring_usage_limit,
 		ledring_production_limit: settings.ledring_production_limit,
 		lastMeasureGas: 0,       								// 'measureGas' (m3)
 		lastMeterGas: null,    									// 'meterGas' (m3)
+		lastMeterGas_tm: null,									// timestamp of gas meter reading, e.g. 1706232000 (yymmddhhmm)
 		lastMeasurePower: 0,       							// 'measurePower' (W)
 		lastMeterPower: null,    								// 'meterPower' (kWh)
 		lastMeterPowerPeak: null,    						// 'meterPower_peak' (kWh)
@@ -347,6 +348,11 @@ function checkProduction(deviceData) {
 	});
 }
 
+function toEpoch(time) {
+	const tmString = time.toString();
+	const tm = new Date(`20${tmString.slice(0, 2)}`, tmString.slice(2, 4), tmString.slice(4, 6), tmString.slice(6, 8));
+	return tm;
+}
 
 function handleNewReadings(deviceData) {
   // Homey.log('storing new readings');
@@ -356,6 +362,7 @@ function handleNewReadings(deviceData) {
 	if (safeRead(deviceData, 'readings') === undefined) {
 		return;
 	}
+	if (Number(safeRead(deviceData, 'readings.pwr')) > 20000) return;	// ignore invalid readings
 
 	// init all readings
 	let electricityPointMeterConsumed = 0;
@@ -370,8 +377,13 @@ function handleNewReadings(deviceData) {
 
 	// gas readings from device
 	const meterGas = Number(safeRead(deviceData, 'readings.gas')); // gas_cumulative_meter
-	if (deviceData.lastMeterGas != null) {
-		measureGas = Math.round((meterGas - deviceData.lastMeterGas) * 100) / 100; // gas_interval_meter (1h)
+	const meterGasTm = Number(safeRead(deviceData, 'readings.gts')); // gas_meter_timestamp
+	if (deviceData.lastMeterGas_tm === null) { deviceData.lastMeterGas_tm = meterGasTm; } // first reading after init
+	// constructed gas readings
+	if ((deviceData.lastMeterGas !== meterGas) || (deviceData.lastMeterGas_tm !== meterGasTm)) {
+		let passedHours = (toEpoch(meterGasTm) - toEpoch(deviceData.lastMeterGas_tm)) / 1000 / 60 / 60;
+		if (meterGasTm === undefined) { passedHours = 1; }
+		measureGas = Math.round((meterGas - deviceData.lastMeterGas) / passedHours * 1000) / 1000; // gas_interval_meter
 	}
 
 // electricity readings from device
@@ -383,7 +395,7 @@ function handleNewReadings(deviceData) {
 	electricityCumulativeMeterPeakConsumed = Number(safeRead(deviceData, 'readings.p2'));
 	lastMeterPowerTimestamp = safeRead(deviceData, 'readings.tm');
 
-// constructed readings
+// constructed electricity readings
 	const meterPower = (electricityCumulativeMeterOffpeakConsumed + electricityCumulativeMeterPeakConsumed
 		- electricityCumulativeMeterOffpeakProduced - electricityCumulativeMeterPeakProduced);
 	let measurePower = electricityPointMeterConsumed; // - electricityPointMeterProduced;
@@ -466,6 +478,7 @@ function handleNewReadings(deviceData) {
 	deviceData.lastMeterPower = meterPower;
 	deviceData.lastMeasureGas = measureGas;
 	deviceData.lastMeterGas = meterGas;
+	deviceData.lastMeterGas_tm = meterGasTm;
 	deviceData.lastOffpeak = offPeak;
 
   // Homey.log(deviceData);

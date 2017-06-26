@@ -67,8 +67,7 @@ module.exports.settings = (deviceData, newSettingsObj, oldSettingsObj, changedKe
 	Homey.log('new settings: ');
 	Homey.log(newSettingsObj);
 
-	if (parseInt(newSettingsObj.ledring_usage_limit, 10) < 0 || !Number.isInteger(newSettingsObj.ledring_usage_limit) ||
-	parseInt(newSettingsObj.ledring_production_limit, 10) < 0 || !Number.isInteger(newSettingsObj.ledring_production_limit)) {
+	if (parseInt(newSettingsObj.ledring_usage_limit, 10) < 0 || !Number.isInteger(newSettingsObj.ledring_usage_limit)) {
 		Homey.log('Ledring setting is invalid, ignoring new settings');
 		callback('Ledring settings must be a positive integer number', null); //  settings must not be saved
 		return;
@@ -77,7 +76,6 @@ module.exports.settings = (deviceData, newSettingsObj, oldSettingsObj, changedKe
 	if (newSettingsObj.youLessIp === oldSettingsObj.youLessIp) {
 		Homey.log('Storing new ledring settings');
 		devices[deviceData.id].ledring_usage_limit = newSettingsObj.ledring_usage_limit;
-		devices[deviceData.id].ledring_production_limit = newSettingsObj.ledring_production_limit;
 		callback(null, true); 	// always fire the callback, or the settings won't change!
 		clearInterval(intervalId[deviceData.id]);                // end polling of device for readings
 		setTimeout(() => {                                   // wait for running poll to end
@@ -91,7 +89,6 @@ module.exports.settings = (deviceData, newSettingsObj, oldSettingsObj, changedKe
 			Homey.log('Storing new device settings');
 			devices[deviceData.id].youLessIp = newSettingsObj.youLessIp;
 			devices[deviceData.id].ledring_usage_limit = newSettingsObj.ledring_usage_limit;
-			devices[deviceData.id].ledring_production_limit = newSettingsObj.ledring_production_limit;
 			callback(null, true); 	// always fire the callback, or the settings won't change!
 			clearInterval(intervalId[deviceData.id]);                // end polling of device for readings
 			setTimeout(() => {                                   // wait for running poll to end
@@ -188,7 +185,7 @@ function buildDevice(deviceData, settings) {
 		youLessIp: settings.youLessIp,
 		pollingInterval: settings.pollingInterval,
 		ledring_usage_limit: settings.ledring_usage_limit,
-		ledring_production_limit: settings.ledring_production_limit,
+		ledring_production_limit: 3000,
 		lastMeasurePower: 0,       							// 'measurePower' (W)
 		lastMeterPower: null,    								// 'meterPower' (kWh)
 		readings: {},   												// or settings.readings
@@ -276,7 +273,9 @@ function handleNewReadings(deviceData) {
 
 // electricity readings from device
 	measurePower = Number(safeRead(deviceData, 'readings.pwr'));
-	meterPower = Number(safeRead(deviceData, 'readings.cnt').replace(",", "."));
+	meterPower = Number(safeRead(deviceData, 'readings.cnt').replace(',', '.'));
+
+	if (measurePower > 20000) return;	// ignore invalid readings
 
 // constructed readings
 	const measurePowerDelta = (measurePower - deviceData.lastMeasurePower);

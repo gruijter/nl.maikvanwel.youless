@@ -10,7 +10,7 @@
     "nl": "Leest data van YouLess energie meters"
   },
 
-  "version": "1.0.0",
+  "version": "1.1.0",
   "compatibility": ">= 1.3",
   "author": {
     "name": "Robin Gruijter",
@@ -19,6 +19,10 @@
 
 	"contributors": {
 		"developers": [
+			{
+		    "name": "Robin Gruijter",
+		    "email": "gruijter@hotmail.com"
+		  },
 			{
 				"name": "Maik van Wel",
 				"email": "m.vanwel@inproxio.eu"
@@ -62,8 +66,8 @@
         "nl": "Gasverbruik (vorige uur)"
       },
       "units": {
-        "en": "m\u00B3",
-        "nl": "m\u00B3"
+        "en": "m\u00B3 /hr",
+        "nl": "m\u00B3 /uur"
       },
       "getable": true,
       "setable": false
@@ -142,8 +146,8 @@
 		{
       "id": "LS110",
       "name": {
-        "en": "LS-110",
-        "nl": "LS-110"
+        "en": "LS110/120 E",
+        "nl": "LS110/120 E"
       },
       "images": {
         "large": "./drivers/LS110/assets/images/large.jpg",
@@ -179,8 +183,8 @@
         {
           "type": "group",
           "label": {
-            "en": "YouLess LS-110 settings",
-            "nl": "YouLess LS-110 instellingen"
+            "en": "YouLess LS110/120 E settings",
+            "nl": "YouLess LS110/120 E instellingen"
           },
           "children": [
             {
@@ -211,16 +215,6 @@
               },
               "attr": { "min": 0 },
               "value": 3000
-            },
-            {
-              "id": "ledring_production_limit",
-              "type": "number",
-              "label": {
-                "en": "Ledring screensaver max production (W)",
-                "nl": "Ledring screensaver max productie (W)"
-              },
-              "attr": { "min": 0 },
-              "value": 3000
             }
           ]
         }
@@ -230,8 +224,8 @@
     {
       "id": "LS120",
       "name": {
-        "en": "LS-120 (P1)",
-        "nl": "LS-120 (P1)"
+        "en": "LS120 P1",
+        "nl": "LS120 P1"
       },
       "images": {
         "large": "./drivers/LS120/assets/images/large.jpg",
@@ -328,8 +322,8 @@
         {
           "type": "group",
           "label": {
-            "en": "YouLess LS-120 settings",
-            "nl": "YouLess LS-120 instellingen"
+            "en": "YouLess LS120 P1 settings",
+            "nl": "YouLess LS120 P1 instellingen"
           },
           "children": [
             {
@@ -374,11 +368,181 @@
           ]
         }
       ]
+    },
+
+		{
+      "id": "LS110Water",
+      "name": {
+        "en": "LS110/120 W",
+        "nl": "LS110/120 W"
+      },
+      "images": {
+        "large": "./drivers/LS110Water/assets/images/large.jpg",
+        "small": "./drivers/LS110Water/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_water",
+        "meter_water"
+			],
+			"capabilitiesOptions": {
+				"measure_water": {
+					"type": "number",
+					"title": {
+						"en": "Water flow",
+						"nl": "Waterdoorstroming"
+					},
+					"units": {
+						"en": "L/min"
+					},
+					"desc": {
+						"en": "Water flow in Liters per minute (L/min)",
+						"nl": "Waterdoorstroming in Liters per minuut (L/min)"
+					},
+					"chartType": "stepLine",
+					"decimals": 1,
+					"getable": true,
+					"setable": false
+				}
+      },
+      "mobile": {
+        "components": [
+          {
+            "id": "icon",
+            "capabilities": [ ]
+          },
+          {
+            "id": "sensor",
+            "capabilities": [
+              "measure_water",
+              "meter_water"
+            ],
+						"options": {
+							"icons": {
+								"measure_water": "./drivers/LS110Water/assets/images/measure_water_icon.svg"
+							}
+						}
+          }
+        ]
+      },
+
+      "pair": [
+          {
+          "id": "pair"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device settings",
+            "nl": "Device instellingen"
+          },
+          "children": [
+            {
+              "id": "youLessIp",
+              "type": "text",
+              "label": {
+                "en": "URL or IP address",
+                "nl": "URL of IP adres"
+              },
+              "value": "youless"
+            },
+						{
+							"id": "pollingInterval",
+							"type": "number",
+							"label": {
+								"en": "Polling interval (miliseconds)",
+								"nl": "Polling interval (miliseconden)"
+							},
+							"attr": { "min": 100 },
+							"value": 350
+						}
+					]
+				},
+				{
+          "type": "group",
+          "label": {
+            "en": "Water meter settings",
+            "nl": "Watermeter instellingen"
+          },
+          "children": [
+            {
+              "id": "meter_water_offset",
+              "type": "number",
+              "label": {
+                "en": "Set watermeter (m\u00B3)",
+                "nl": "Stand instellen (m\u00B3)"
+              },
+              "attr": { "min": 0, "step": 0.0001},
+              "value": 0
+            },
+						{
+							"id": "optical_sensor_pulse",
+							"type": "number",
+							"label": {
+								"en": "Pulses per m\u00B3",
+								"nl": "Pulsen per m\u00B3"
+							},
+							"attr": { "min": 0 },
+							"value": 1000
+						}
+          ]
+        },
+				{
+					"type": "group",
+					"label": {
+						"en": "Optical sensor settings",
+						"nl": "Optische sensor instellingen"
+					},
+					"children": [
+						{
+							"id": "optical_sensor_raw_max",
+							"type": "number",
+							"label": {
+								"en": "Peak value",
+								"nl": "Maximale waarde"
+							},
+							"attr": { "min": 0, "max": 1000 },
+							"value": 700
+						},
+						{
+							"id": "optical_sensor_raw_min",
+							"type": "number",
+							"label": {
+								"en": "Minimum value",
+								"nl": "Minimale waarde"
+							},
+							"attr": { "min": 0, "max": 1000 },
+							"value": 600
+						},
+						{
+							"id": "auto_calibrate",
+							"type": "checkbox",
+							"value": true,
+							"label": {
+									"en": "Automatic calibration",
+									"nl": "Automatisch calibreren"
+							}
+						},
+						{
+							"id": "log_raw",
+							"type": "checkbox",
+							"value": false,
+							"label": {
+									"en": "Log raw sensor data",
+									"nl": "Ruwe sensordata loggen"
+							}
+						}
+					]
+				}
+      ]
     }
   ],
 
   "flow":	{
     "triggers":[
+
       {
         "id":"tariff_changed",
         "title": {
@@ -389,10 +553,10 @@
           {
             "name": "LS120",
             "type": "device",
-            "filter": "driver_uri=homey:app:nl.maikvanwel.youless&driver_id=LS120",
+            "filter": "driver_uri=homey:app:com.gruijter.enelogic&driver_id=LS120",
             "placeholder": {
-              "en": "Which YouLess device",
-              "nl": "Welk YouLess apparaat"
+              "en": "Which device",
+              "nl": "Welk apparaat"
              }
           }
         ],
@@ -420,8 +584,8 @@
             "type": "device",
             "filter": "driver_uri=homey:app:nl.maikvanwel.youless&driver_id=LS120",
             "placeholder": {
-              "en": "Which YouLess device",
-              "nl": "Welk YouLess apparaat"
+              "en": "Which device",
+              "nl": "Welk apparaat"
              }
           }
         ],
@@ -483,6 +647,35 @@
 					"example" : 18
 					}
 				]
+			},
+			{
+				"id":"measure_water_changed",
+				"title": {
+					"en":"Water flow changed",
+					"nl":"Waterdoorstroming gewijzigd"
+				},
+				"args": [
+					{
+						"name": "LS110Water",
+						"type": "device",
+						"filter": "driver_uri=homey:app:nl.maikvanwel.youless&driver_id=LS110Water",
+						"placeholder": {
+							"en": "Which YouLess device",
+							"nl": "Welk YouLess apparaat"
+						 }
+					}
+				],
+				"tokens":[
+					{
+						"name":"flow",
+						"type": "number",
+						"title": {
+							"en":"L/min",
+							"nl":"L/min"
+						},
+						"example" : 9.8
+					}
+				]
 			}
     ],
     "conditions": [
@@ -498,8 +691,8 @@
             "type": "device",
             "filter": "driver_uri=homey:app:nl.maikvanwel.youless&driver_id=LS120",
             "placeholder": {
-              "en": "Which YouLess device",
-              "nl": "Welk YouLess apparaat"
+              "en": "Which device",
+              "nl": "Welk apparaat"
              }
           }
         ]
