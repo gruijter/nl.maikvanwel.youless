@@ -2,7 +2,7 @@
 
 Homey.log('ledring.js started');
 
-// module.exports.init = function() {         // enelogic_power animation init
+// module.exports.init = function() {         // youless_power animation init
 
 const Animation = Homey.manager('ledring').Animation;
 
@@ -29,9 +29,9 @@ const animationPower = new Animation({
 });
 
 animationPower.register((err, result) => {
-	Homey.manager('ledring').registerScreensaver('enelogic_power', animationPower);
+	Homey.manager('ledring').registerScreensaver('youless_power', animationPower);
 	if (err) return Homey.error(err);
-	Homey.log('enelogic_power ledring animation is registered');
+	Homey.log('youless_power ledring animation is registered');
 	animationPower.on('screensaver_start', (screensaverId) => {
 	//		Homey.log('Screensaver started');
 	});

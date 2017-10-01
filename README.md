@@ -4,8 +4,13 @@ Homey app to integrate YouLess LS110 and LS120 energy meters into Homey.
 The app builds on the original work of Maik van Wel. His LS110 driver is still
 available for legacy support.
 
-### Energy meter ###
+### Analogue Energy meter ###
 The LS110/LS120 driver provides logs and flow cards for the following data:
+- Actual power usage/production (W, 10s interval)
+- Totalized power meter (kWh, 10s updates)
+
+### S0 Energy meter ###
+The LS120 S0 driver provides logs and flow cards for the following data:
 - Actual power usage/production (W, 10s interval)
 - Totalized power meter (kWh, 10s updates)
 
@@ -70,6 +75,7 @@ If you really like the app you can buy me a beer.
 Version changelog
 
 ```
+v1.1.1	2017.10.01 added S0 metering for youless fw 1.4.0, bug fixes, request updated to v2.83.0
 v1.1.0	2017.06.26 improved gas usage logging, added LS110 driver, bug fixes
 Added experimental water meter (using LS110/LS120 optical sensor)
 v1.0.0  2017.06.07 App transfer from Maik van Wel. His LS-110 driver is kept for legacy support.
