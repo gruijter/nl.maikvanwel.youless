@@ -10,7 +10,7 @@
     "nl": "Leest data van YouLess energie meters"
   },
 
-  "version": "1.1.1",
+  "version": "1.1.2",
   "compatibility": ">= 1.3",
   "author": {
     "name": "Robin Gruijter",
@@ -30,6 +30,10 @@
 			{
 				"name": "Bas Jansen",
 				"email": "bas@balotti.com"
+			},
+			{
+				"name": "Robin van Kekem",
+				"email": "nl.inversion@gmail.com"
 			}
 		]
 	},
@@ -68,6 +72,23 @@
       "units": {
         "en": "m\u00B3 /hr",
         "nl": "m\u00B3 /uur"
+      },
+      "getable": true,
+      "setable": false
+    },
+    "measure_gas_ls110": {
+      "type": "number",
+      "title": {
+        "en": "Gas",
+        "nl": "Gas"
+      },
+      "desc": {
+        "en": "Gas usage (l/h)",
+        "nl": "Gasverbruik (l/u)"
+      },
+      "units": {
+        "en": "l/h",
+        "nl": "l/uur"
       },
       "getable": true,
       "setable": false
@@ -614,6 +635,110 @@
 					]
 				}
       ]
+    },
+
+    {
+      "id": "LS110Gas",
+      "name": {
+        "en": "LS110/120 G",
+        "nl": "LS110/120 G"
+      },
+      "images": {
+        "large": "./drivers/LS110Gas/assets/images/large.jpg",
+        "small": "./drivers/LS110Gas/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_gas_ls110",
+        "meter_gas"
+      ],
+      "capabilitiesOptions": {
+				"measure_gas_ls110": {
+					"type": "number",
+					"title": {
+						"en": "Gas flow",
+						"nl": "Gasdoorstroming"
+					},
+					"units": {
+            "en": "L/h",
+            "nl": "L/u"
+					},
+					"desc": {
+						"en": "Water flow in Liters per hour (L/h)",
+						"nl": "Waterdoorstroming in Liters per uur (L/u)"
+					},
+					"chartType": "stepLine",
+					"decimals": 1,
+					"getable": true,
+					"setable": false
+				}
+      },
+      "mobile": {
+        "components": [
+          {
+            "id": "icon",
+            "capabilities": [ ]
+          },
+          {
+            "id": "sensor",
+            "capabilities": [
+              "measure_gas_ls110",
+              "meter_gas"
+            ],
+						"options": {
+							"icons": {
+								"measure_gas_ls110": "./drivers/LS110Gas/assets/images/measure_gas_icon.svg"
+							}
+						}
+          }
+        ]
+      },
+
+      "pair": [
+          {
+          "id": "pair"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "YouLess LS110/120 G settings",
+            "nl": "YouLess LS110/120 G instellingen"
+          },
+          "children": [
+            {
+              "id": "youLessIp",
+              "type": "text",
+              "label": {
+                "en": "URL or IP address",
+                "nl": "URL of IP adres"
+              },
+              "value": "youless"
+            },
+            {
+              "id": "pollingInterval",
+              "type": "number",
+              "label": {
+                "en": "Polling interval (seconds)",
+                "nl": "Polling interval (seconden)"
+              },
+              "attr": { "min": 10 },
+              "value": 10
+            },
+            {
+              "id": "ledring_usage_limit",
+              "type": "number",
+              "label": {
+                "en": "Ledring screensaver max gas usage (l/u)",
+                "nl": "Ledring screensaver max gas gebruik (l/u)"
+              },
+              "attr": { "min": 0 },
+              "value": 3000
+            }
+          ]
+        }
+      ]
     }
   ],
 
@@ -823,7 +948,7 @@
 				"en": "YouLess Power",
 				"nl": "YouLess Energie"
 			}
-		}
+    }
   ],
   "permissions": [
     "homey:manager:ledring"
