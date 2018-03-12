@@ -1,20 +1,20 @@
 {
-  "pair": {
-		"title": "Voer het IP adres of URL in:",
-		"sip": "IP adres (0.0.0.0)",
-		"authorization": {
-			"configure": "Configureer YouLess device",
-			"start_configuration":"Opslaan!",
-			"configuration_explanation": "Voer hier je gegevens van je YouLess in."
-		},
-    "configuration": {
-       "name": "Naam",
-       "ip_address": "IP Adres"
-    },
-    "feedback":{
-			"could_not_connect": "Kon geen verbinding maken met je YouLess device. Check je connectie gegevens.",
-			"succesfully_connected": "Connectie succesvol!"
+	"pair": {
+		"title": "Device toevoegen",
+		"intro": "Voer het IP adres in van het device.\r\nHet wachtwoord leeglaten als dat niet is ingesteld.",
+		"intro2": "Voer het IP adres in van het device.",
+		"host": "IP adres",
+		"password": "Wachtwoord",
+		"required": "Het IP adres moet worden ingevuld",
+		"testSettings": "Opslaan",
+		"success": "Succes!"
+	},
+	"settings": {
+		"app": {
+			"title": "Youless Debug Logs",
+			"logs": "Logs",
+			"deletelogs": "Logs verwijderen",
+			"getlogs": "Logs verversen"
 		}
-  },
-  "usage": "Het huidige energieverbruik van __name__ is __usage__ watt"
+	}
 }
