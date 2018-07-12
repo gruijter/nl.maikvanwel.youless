@@ -1,14 +1,14 @@
 /*
 Copyright 2017, 2018, Robin de Gruijter (gruijter@hotmail.com)
 
-This file is part of nl.maikvanwel.youless.
+This file is part of com.gruijter.enelogic.
 
-nl.maikvanwel.youless is free software: you can redistribute it and/or modify
+com.gruijter.enelogic is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-nl.maikvanwel.youless is distributed in the hope that it will be useful,
+com.gruijter.enelogic is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
@@ -47,7 +47,16 @@ class LS120Device extends Homey.Device {
 			// create youless session
 			this.youless = new this._driver.Youless(settings.password, settings.youLessIp);
 			// sync time in youless
-			await this.youless.syncTime();
+			this.youless.login()
+				.then(() => {
+					this.youless.syncTime()
+						.catch((error) => {
+							this.error(error.message);
+						});
+				})
+				.catch((error) => {
+					this.error(error.message);
+				});
 			// this.log(this.youless);
 			// register trigger flow cards of custom capabilities
 			this.powerChangedTrigger = new Homey.FlowCardTriggerDevice('power_changed_LS120S0')
@@ -130,6 +139,9 @@ class LS120Device extends Homey.Device {
 		let err;
 		if (!this.youless.loggedIn) {
 			await this.youless.login()
+				.then(() => {
+					this.log('login succesfull');
+				})
 				.catch((error) => {
 					this.error(`login error: ${error}`);
 					err = new Error(`login error: ${error}`);

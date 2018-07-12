@@ -1,14 +1,14 @@
 /*
 Copyright 2017, 2018, Robin de Gruijter (gruijter@hotmail.com)
 
-This file is part of nl.maikvanwel.youless.
+This file is part of com.gruijter.enelogic.
 
-nl.maikvanwel.youless is free software: you can redistribute it and/or modify
+com.gruijter.enelogic is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-nl.maikvanwel.youless is distributed in the hope that it will be useful,
+com.gruijter.enelogic is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.

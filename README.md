@@ -71,6 +71,7 @@ If you really like the app you can buy me a beer.
 Version changelog
 
 ```
+v2.0.5  2018.07.08 Fix gas flow meter LS120. Password fix. Http optimizations.
 v2.0.3	2018.03.12 Complete rewrite to sdk2. Password support added.
 v1.1.1	2017.10.01 added S0 metering for youless fw 1.4.0, bug fixes, request updated to v2.83.0
 v1.1.0	2017.06.26 improved gas usage logging, added LS110 driver, bug fixes

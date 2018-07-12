@@ -1,14 +1,14 @@
 /*
 Copyright 2017, 2018, Robin de Gruijter (gruijter@hotmail.com)
 
-This file is part of nl.maikvanwel.youless.
+This file is part of com.gruijter.enelogic.
 
-nl.maikvanwel.youless is free software: you can redistribute it and/or modify
+com.gruijter.enelogic is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-nl.maikvanwel.youless is distributed in the hope that it will be useful,
+com.gruijter.enelogic is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
@@ -132,7 +132,9 @@ class LS120Driver extends Homey.Driver {
 		const meterGasTm = readings.gtm; // gas_meter_timestamp, youless fw ^1.3.4
 		let measureGas = this.meters.lastMeasureGas;
 		// constructed gas readings
-		if ((this.meters.lastMeterGas !== meterGas) && (this.meters.lastMeterGasTm !== 0)) {
+		const meterGasChanged = (this.meters.lastMeterGas !== meterGas) && (this.meters.lastMeterGasTm !== 0);
+		const meterGasTmChanged = (meterGasTm !== this.meters.lastMeterGasTm) && (this.meters.lastMeterGasTm !== 0);
+		if (meterGasChanged || meterGasTmChanged) {
 			const passedHours = (meterGasTm - this.meters.lastMeterGasTm) / 3600000;
 			if (passedHours > 0) {
 				measureGas = Math.round((meterGas - this.meters.lastMeterGas) / passedHours) / 1000; // gas_interval_meter
