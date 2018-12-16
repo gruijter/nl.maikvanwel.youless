@@ -10,7 +10,7 @@
     "nl": "Leest data van de YouLess energie meter"
   },
 
-  "version": "2.0.5",
+  "version": "2.1.0",
 	"sdk": 2,
   "compatibility": ">= 1.5",
   "author": {
@@ -29,23 +29,8 @@
 	"bugs": {
 		"url": "https://github.com/gruijter/com.gruijter.enelogic/issues"
 	},
-	"athomForumDiscussionId": 2779,
-	"contributors": {
-		"developers": [
-			{
-				"name": "Robin de Gruijter",
-				"email": "gruijter@hotmail.com"
-			},
-			{
-				"name": "Maik van Wel",
-				"email": "m.vanwel@inproxio.eu"
-			},
-			{
-				"name": "Bas Jansen",
-				"email": "bas@balotti.com"
-			}
-		]
-	},
+"homeyCommunityTopicId": 2279,
+
   "images": {
     "large": "./assets/images/large.jpg",
     "small": "./assets/images/small.jpg"
@@ -74,8 +59,8 @@
         "nl": "Gas"
       },
       "desc": {
-        "en": "Gas usage (previous hour)",
-        "nl": "Gasverbruik (vorige uur)"
+        "en": "Gas usage",
+        "nl": "Gasverbruik"
       },
       "units": {
         "en": "m\u00B3 /hr",
@@ -556,8 +541,8 @@
 				"measure_water": {
 					"type": "number",
 					"title": {
-						"en": "Water flow",
-						"nl": "Waterdoorstroming"
+						"en": "L/min",
+						"nl": "L/min"
 					},
 					"units": {
 						"en": "L/min"
@@ -757,8 +742,8 @@
 			{
 				"id":"measure_water_changed",
 				"title": {
-					"en":"Water flow changed",
-					"nl":"Waterdoorstroming gewijzigd"
+					"en":"L/min changed",
+					"nl":"L/min gewijzigd"
 				},
 				"args": [
 					{
