@@ -1,86 +1,17 @@
-# YouLess #
+# Youless #
 
-Homey app to integrate YouLess LS110 and LS120 energy meters into Homey.
-The app builds on the original work of Maik van Wel. His LS110 driver is still
-available for legacy support.
+Homey app to integrate YouLess LS110/LS120 energy meters.
 
-### Analogue Energy meter ###
-The LS110/LS120 driver provides logs and flow cards for the following data:
-- Actual power usage/production (W, 10s interval)
-- Totalized power meter (kWh, 10s updates)
+# ATTENTION - THIS APP IS REPLACED WITH A NEW APP!! #
 
-### S0 Energy meter ###
-The LS120 S0 driver provides logs and flow cards for the following data:
-- Actual power usage/production (W, 10s interval)
-- Totalized power meter (kWh, 10s updates)
+This app will no longer be updated for Homey V2. All functionality of the Youless app has been moved to a new app.
 
-### P1 Energy and Gas meter ###
-With the P1 connection on the LS120 you get the following extra's:
-- All individual power meters (kWh, 10s updates)
-- Recent gas usage (m3, of the previous hour)
-- Gas meter (m3, 1 hour updates)
-- Tariff change (off-peak, true or false)
+Please remove the youless app, and install the new app:
 
-**Ledring screensaver:**
-- See how much energy you are using or producing just by looking at your Homey!
-- Is the wash-dryer ready? Am I now producing power to the grid?
+https://apps.athom.com/app/com.gruijter.enelogic
 
-The power is totalized for consumed and produced power, during off-peak and
-peak hours. Production to the powergrid is displayed as negative watts.
-Only changed values are logged.
+The new Enelogic and Youless app will be maintained and updated for Homey V2.
 
-### Experimental YouLess Watermeter ###
-This experimental driver makes use of the optical sensor of the YouLess LS110
-and LS120. It has successfully been tested on water meters from Vitens ([type 1]).
-Place the optical sensor on the rotating mirror. Exact positioning is required.
-See the detailed [installation manual] for further instructions.
+![image][enelogic-app-image]
 
-The water meter driver provides logs and flow cards for the following data:
-- Actual water flow (L/min, 60s average)
-- Water meter (m3)
-
-The water meter driver can be installed additionally to the power meter driver.
-If you use the LS120 with P1 connection, you will get all electricity meters, the
-gas meter and the water meter simultaneously from one YouLess device!
-The water meter driver uses the raw reflectiveness of the optical sensor. It has
-to poll the YouLess 3x per second, which puts significant load on your Homey and
-your WiFi network, especially when water is being used (burst mode is then
-switched on). I'm working with YouLess to get them to support water meters in
-the firmware so that it takes off the load from Homey and the network, and also
-increases accuracy of the meter. But this has no priority with them since they
-believe there aren't enough users interested in water meter functionality.
-**If you like the water meter, please help me convince YouLess by placing a
-comment below or in the [forum].**
-
-### Device setup in Homey ###
-To setup go to "Devices", choose the correct driver. Use the LS120-P1 if you have
-a P1 connection to your smart meter. Otherwise choose the LS110/120-E driver
-Enter the fixed IP-address (preferred) or use the default url 'youless'.
-If you want to use the water meter you can simply add this as a second device and
-choose the LS110/120-W driver.
-
-### Donate: ###
-If you like the app you can show your appreciation by posting it in the [forum].
-If you really like the app you can buy me a beer.
-
-[![Paypal donate][pp-donate-image]][pp-donate-link]
-
-
-===============================================================================
-
-Version changelog
-
-```
-v2.0.5  2018.07.08 Fix gas flow meter LS120. Password fix. Http optimizations.
-v2.0.3	2018.03.12 Complete rewrite to sdk2. Password support added.
-v1.1.1	2017.10.01 added S0 metering for youless fw 1.4.0, bug fixes, request updated to v2.83.0
-v1.1.0	2017.06.26 improved gas usage logging, added LS110 driver, bug fixes
-Added experimental water meter (using LS110/LS120 optical sensor)
-v1.0.0  2017.06.07 App transfer from Maik van Wel. His LS-110 driver is kept for legacy support.
-Internal speech support is removed. Node modules updated. Added a new LS-110 driver and support for LS-120 (P1).
-```
-[pp-donate-link]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FV7VNCQ6XBY6L
-[pp-donate-image]: https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif
-[type 1]: https://www.vitens.nl/meer-informatie/typen-watermeters
-[forum]: https://forum.athom.com/discussion/2779
-[installation manual]: https://forum.athom.com/discussion/comment/61126/#Comment_61126
+[enelogic-app-image]: https://community.athom.com/uploads/athom/original/2X/3/3f3354ce6e814c5477f917bd6c57b3821d8d18f9.png
