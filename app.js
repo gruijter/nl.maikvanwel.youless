@@ -27,6 +27,11 @@ class MyApp extends Homey.App {
 
 	onInit() {
 		this.log('Youless App is running!');
+		const options = { excerpt: 'THE YOULESS APP IS DEPRECATED. VISIT THE APPSTORE FOR MORE INFO' };
+		const notification = new Homey.Notification(options);
+		notification.register()
+			.catch(error => this.log(error));
+
 		this.ledring = new Ledring();
 		this.logger = new Logger('log', 200);	// [logName] [, logLength]
 
@@ -39,13 +44,13 @@ class MyApp extends Homey.App {
 		});
 		Homey
 			.on('unload', () => {
-			this.log('app unload called');
-			// save logs to persistant storage
-			this.logger.saveLogs();
+				this.log('app unload called');
+				// save logs to persistant storage
+				this.logger.saveLogs();
 			})
 			.on('memwarn', () => {
 				this.log('memwarn!');
-		});
+			});
 		// do garbage collection every 10 minutes
 		this.intervalIdGc = setInterval(() => {
 			global.gc();
@@ -65,5 +70,3 @@ class MyApp extends Homey.App {
 }
 
 module.exports = MyApp;
-
-
